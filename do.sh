@@ -2,6 +2,8 @@
 
 FILE=$1
 
+# convert from windows to unix format
+dos2unix ${FILE}
 # reverse file by lines
 tac ${FILE} | cat > ${FILE}
 # remove icon link
