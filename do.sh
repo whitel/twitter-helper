@@ -1,15 +1,18 @@
 #!/bin/bash
 
 FILE=$1
+TEMPFILE="tempdata"
 
 # convert from windows to unix format
 dos2unix ${FILE}
 # reverse file by lines
-tac ${FILE} | cat > ${FILE}
+tac ${FILE} > ${TEMPFILE}
+mv ${TEMPFILE} ${FILE}
 # remove icon link
 sed -i 's/\!\[img\](https:\/\/www.allmytweets.net\/img\/extlink.png)//g' ${FILE}
 # add quote to date
-awk '$(NF-3)="【"$(NF-3)' ${FILE} | sed 's/$/】/g' | cat > ${FILE}
+awk '$(NF-3)="【"$(NF-3)' ${FILE} | sed 's/$/】/g' > ${TEMPFILE}
+mv ${TEMPFILE} ${FILE}
 # add line seperator
 sed -i '/^.*$/a\-----' ${FILE}
 
