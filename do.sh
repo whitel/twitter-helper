@@ -1,10 +1,15 @@
 #!/bin/bash
 
 FILE=$1
+FLAG=$2
 TEMPFILE="tempdata"
 
 # convert from windows to unix format
 dos2unix ${FILE}
+# remove reply lines (optional)
+if [[ ${FLAG} -eq nore ]]; then
+    sed -i '/^- @/d' ${FILE}
+fi
 # reverse file by lines
 tac ${FILE} > ${TEMPFILE}
 mv ${TEMPFILE} ${FILE}
